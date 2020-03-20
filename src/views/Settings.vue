@@ -1,6 +1,6 @@
 <template>
-    <div class="home">
-        This is where the graphs will go
+    <div class="about">
+        This is where the settings will go
     </div>
 </template>
 
