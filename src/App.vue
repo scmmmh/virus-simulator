@@ -4,7 +4,7 @@
             <div class="d-flex align-center">
                 <v-btn to="/" text>
                     <v-icon>mdi-chart-bell-curve</v-icon>
-                    <span class="ml-2">Virtual Simulator</span>
+                    <span class="ml-2">Virus Simulator</span>
                 </v-btn>
                 <v-btn to="/settings" text>
                     <v-icon>mdi-cogs</v-icon>
