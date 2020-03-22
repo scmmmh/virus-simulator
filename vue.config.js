@@ -1,5 +1,11 @@
 module.exports = {
-    "transpileDependencies": [
-        "vuetify"
+    pages: {
+        index: {
+            entry: 'src/main.ts',
+            title: 'Virus Simulator',
+        },
+    },
+    transpileDependencies: [
+        'vuetify'
     ],
 }
