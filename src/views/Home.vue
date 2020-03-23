@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <v-btn  @click="runSimulation">Start</v-btn>
+        <v-btn  @click="startSimulation">Start</v-btn>
         {{ value }}
     </div>
 </template>
@@ -10,8 +10,11 @@ import { Component, Vue } from 'vue-property-decorator';
 // eslint-disable-next-line
 // @ts-ignore
 import populationWorkerLoader from 'workerize-loader!@/webworkers/population';
+// eslint-disable-next-line
+// @ts-ignore
+import spreadWorkerLoader from 'workerize-loader!@/webworkers/spread';
 
-import { PopulationWorker, Person } from '@/interfaces';
+import { PopulationWorker, SpreadWorker, Person } from '@/interfaces';
 
 @Component({
     components: {
@@ -20,6 +23,8 @@ import { PopulationWorker, Person } from '@/interfaces';
 export default class Home extends Vue {
     public value = -1;
     public populationWorker: PopulationWorker | null = null;
+    public spreadWorker: SpreadWorker | null = null;
+    public population: Person[] | null = null;
 
     public async startSimulation() {
         this.generatePopulation();
@@ -28,8 +33,7 @@ export default class Home extends Vue {
     private async generatePopulation() {
         this.populationWorker = populationWorkerLoader();
         if (this.populationWorker) {
-            const population = await this.populationWorker.generatePopulation(10000);
-            this.value = population.reduce((total: number, person: Person) => { return total + person.age; }, 0) / population.length;
+            this.population = await this.populationWorker.generatePopulation(10000);
             this.populationWorker.terminate();
             this.populationWorker = null;
             await this.runSimulation();
@@ -37,7 +41,14 @@ export default class Home extends Vue {
     }
 
     private async runSimulation() {
-        this.value = -1;
+        this.spreadWorker = spreadWorkerLoader();
+        if (this.spreadWorker && this.population) {
+            const infected = await this.spreadWorker.runSimulation(this.population);
+            console.log(infected);
+            this.value = infected.length;
+            this.spreadWorker.terminate();
+            this.spreadWorker = null;
+        }
     }
 }
 </script>

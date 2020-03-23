@@ -12,3 +12,8 @@ export interface Person {
 export interface Relationship {
     idx: number;
 }
+
+export interface SpreadWorker {
+    runSimulation: (population: Person[]) => number[];
+    terminate: () => undefined;
+}

@@ -11,7 +11,7 @@ export function generatePopulation(populationSize: number) {
     }
     people.forEach((person, idx) => {
         while (person.relationships.length < 10) {
-            const targetIdx = Math.round(Math.random() * populationSize);
+            const targetIdx = Math.floor(Math.random() * populationSize);
             let found = idx === targetIdx ;
             person.relationships.forEach((target) => {
                 if (target.idx === targetIdx) {
