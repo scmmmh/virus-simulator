@@ -14,6 +14,12 @@ export interface Relationship {
 }
 
 export interface SpreadWorker {
-    runSimulation: (population: Person[]) => number[];
+    step: (population: Person[], step: number) => Person[];
     terminate: () => undefined;
+}
+
+export interface SetRunningCommit {
+    running: boolean;
+    step: number;
+    stepLabel: string;
 }

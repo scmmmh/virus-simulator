@@ -1,6 +1,6 @@
 import { Person } from '@/interfaces';
 
-export function runSimulation(population: Person[]) {
+function runSimulation(population: Person[]) {
     let infected = [] as number[];
     initialise(population);
     infected.push(stats(population));
@@ -18,7 +18,7 @@ function initialise(population: Person[]) {
     }
 }
 
-function step(population: Person[], step: number) {
+export function step(population: Person[], step: number) {
     population.forEach((person) => {
         if (person.infected !== null && person.infected < step) {
             person.relationships.forEach((relationship) => {
@@ -30,6 +30,7 @@ function step(population: Person[], step: number) {
             });
         }
     });
+    return population;
 }
 
 function stats(population: Person[]) {
