@@ -139,22 +139,6 @@ export default class Home extends Vue {
                 data[idx].percentage = mean(data[idx].percentages).toFixed(2) + '% (+/- ' + std(data[idx].percentages).toFixed(2) + '%)';
             }
         }
-
-        /*this.$store.state.population.forEach((person: Person) => {
-            for (let idx = 0; idx < data.length; idx++) {
-                if (person.age < data[idx].limit) {
-                    data[idx].count++;
-                    break;
-                }
-            }
-        });
-
-        if (this.$store.state.population.length > 0) {
-            data.forEach((entry) => {
-                entry.percentage = (entry.count / this.$store.state.population.length * 100).toFixed(2) + '%';
-            });
-        }*/
-
         return data;
     }
 }
