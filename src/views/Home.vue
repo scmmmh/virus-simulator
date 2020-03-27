@@ -77,7 +77,7 @@ export default class Home extends Vue {
             this.$store.commit('setRunning', {
                 running: true,
                 step: idx1 * 11,
-                stepLabel: 'Generating a population #' + (idx1 + 1),
+                stepLabel: 'Generating population #' + (idx1 + 1),
             });
             let population = await this.populationWorker.generatePopulation(10000);
             for (let idx2 = 0; idx2 < 3; idx2++) {
@@ -88,7 +88,7 @@ export default class Home extends Vue {
                 this.$store.commit('setRunning', {
                     running: true,
                     step: idx1 * 11 + idx2 + 1,
-                    stepLabel: 'Simulation #' + (idx1 + 1) + ' running',
+                    stepLabel: 'Running simulation #' + (idx1 + 1) + ', day ' + (idx2 + 1),
                 });
                 population = await this.spreadWorker.step(population, idx2);
                 const stats = {
