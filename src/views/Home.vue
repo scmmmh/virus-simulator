@@ -59,28 +59,36 @@ export default class Home extends Vue {
     }
 
     public get progress() {
-        return 100 / 11 * this.$store.state.step;
+        return 100 / 55 * this.$store.state.step;
     }
 
     public async runSimulation() {
         this.$store.commit('setRunning', {
             running: true,
             step: 0,
-            stepLabel: 'Generating a population',
+            stepLabel: 'Starting up',
         });
-        this.$store.commit('setPopulation', []);
-        this.$store.commit('setPopulation', await this.populationWorker.generatePopulation(10000));
-        for (let idx = 0; idx < 10; idx++) {
+        this.$store.commit('clearPopulations');
+        for (let idx1 = 0; idx1 < 5; idx1++) {
             this.$store.commit('setRunning', {
                 running: true,
-                step: idx + 1,
-                stepLabel: 'Simulation running',
+                step: idx1 * 11,
+                stepLabel: 'Generating a population',
             });
-            await this.spreadWorker.step(this.$store.state.population, idx);
+            const population = await this.populationWorker.generatePopulation(10000);
+            this.$store.commit('addPopulation', population);
+            for (let idx2 = 0; idx2 < 10; idx2++) {
+                this.$store.commit('setRunning', {
+                    running: true,
+                    step: idx1 * 11 + idx2 + 1,
+                    stepLabel: 'Simulation running',
+                });
+                await this.spreadWorker.step(population, idx2);
+            }
         }
         this.$store.commit('setRunning', {
             running: false,
-            step: 11,
+            step: 0,
             stepLabel: 'Completed',
         });
     }

@@ -10,12 +10,17 @@ export default new Vuex.Store({
       running: false,
       step: 0,
       stepLabel: '',
-      population: [] as Person[],
+      populations: [] as Person[][],
   },
   mutations: {
-      setPopulation(state, payload: Person[]) {
-          state.population = payload;
+      clearPopulations(state) {
+          state.populations = [];
       },
+
+      addPopulation(state, payload: Person[]) {
+          state.populations = state.populations.concat([payload]);
+      },
+
       setRunning(state, payload: SetRunningCommit) {
           state.running = payload.running;
           state.step = payload.step;
