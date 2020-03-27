@@ -23,3 +23,18 @@ export interface SetRunningCommit {
     step: number;
     stepLabel: string;
 }
+
+export interface AddVirusStatsCommit {
+    day: number;
+    stats: VirusStats;
+}
+
+export interface VirusDayStats {
+    day: number;
+    stats: VirusStats[];
+}
+
+export interface VirusStats {
+    infected: number;
+    newInfected: number;
+}

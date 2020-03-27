@@ -18,6 +18,7 @@
         <v-container>
             <v-row>
                 <v-col>
+                    <virus-stats-component/>
                 </v-col>
                 <v-col>
                     <population-stats/>
@@ -37,11 +38,13 @@ import populationWorkerLoader from 'workerize-loader!@/webworkers/population';
 // @ts-ignore
 import spreadWorkerLoader from 'workerize-loader!@/webworkers/spread';
 import PopulationStats from '@/components/PopulationStats.vue';
-import { PopulationWorker, SpreadWorker, Person } from '@/interfaces';
+import VirusStatsComponent from '@/components/VirusStats.vue';
+import { PopulationWorker, SpreadWorker, Person, VirusStats } from '@/interfaces';
 
 @Component({
     components: {
         PopulationStats,
+        VirusStatsComponent,
     },
 })
 export default class Home extends Vue {
@@ -59,7 +62,7 @@ export default class Home extends Vue {
     }
 
     public get progress() {
-        return 100 / 55 * this.$store.state.step;
+        return 100 / 990 * this.$store.state.step;
     }
 
     public async runSimulation() {
@@ -69,21 +72,41 @@ export default class Home extends Vue {
             stepLabel: 'Starting up',
         });
         this.$store.commit('clearPopulations');
-        for (let idx1 = 0; idx1 < 5; idx1++) {
+        this.$store.commit('clearVirusStats');
+        for (let idx1 = 0; idx1 < 10; idx1++) {
             this.$store.commit('setRunning', {
                 running: true,
                 step: idx1 * 11,
-                stepLabel: 'Generating a population',
+                stepLabel: 'Generating a population #' + (idx1 + 1),
             });
-            const population = await this.populationWorker.generatePopulation(10000);
+            let population = await this.populationWorker.generatePopulation(10000);
+            for (let idx2 = 0; idx2 < 3; idx2++) {
+                population[Math.floor(Math.random() * population.length)].infected = 0;
+            }
             this.$store.commit('addPopulation', population);
-            for (let idx2 = 0; idx2 < 10; idx2++) {
+            for (let idx2 = 0; idx2 < 90; idx2++) {
                 this.$store.commit('setRunning', {
                     running: true,
                     step: idx1 * 11 + idx2 + 1,
-                    stepLabel: 'Simulation running',
+                    stepLabel: 'Simulation #' + (idx1 + 1) + ' running',
                 });
-                await this.spreadWorker.step(population, idx2);
+                population = await this.spreadWorker.step(population, idx2);
+                const stats = {
+                    infected: 0,
+                    newInfected: 0,
+                } as VirusStats;
+                population.forEach((person: Person) => {
+                    if (person.infected !== null) {
+                        stats.infected++;
+                        if (person.infected === idx2) {
+                            stats.newInfected++;
+                        }
+                    }
+                });
+                this.$store.commit('addVirusStats', {
+                    day: idx2,
+                    stats: stats,
+                });
             }
         }
         this.$store.commit('setRunning', {
