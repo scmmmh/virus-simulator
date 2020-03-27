@@ -36,8 +36,8 @@ export default class Home extends Vue {
         return this.$store.state.virusStats.map((virusDay: VirusDayStats) => {
             return {
                 day: virusDay.day,
-                newInfected: virusDay.stats.length > 0 ? Math.round(mean(virusDay.stats.map((stat: VirusStats) => { return stat.newInfected; }))) + ' (+/- ' + Math.round(std(virusDay.stats.map((stat: VirusStats) => { return stat.newInfected; }))) + ')' : '-',
-                infected: virusDay.stats.length > 0 ? Math.round(mean(virusDay.stats.map((stat: VirusStats) => { return stat.infected; }))) + ' (+/- ' + Math.round(std(virusDay.stats.map((stat: VirusStats) => { return stat.infected; }))) + ')' : '-',
+                newInfected: virusDay.stats.length > 0 ? Math.round(mean(virusDay.stats.map((stat: VirusStats) => { return stat.newInfected; }))) + ' (± ' + Math.round(std(virusDay.stats.map((stat: VirusStats) => { return stat.newInfected; }))) + ')' : '-',
+                infected: virusDay.stats.length > 0 ? Math.round(mean(virusDay.stats.map((stat: VirusStats) => { return stat.infected; }))) + ' (± ' + Math.round(std(virusDay.stats.map((stat: VirusStats) => { return stat.infected; }))) + ')' : '-',
             }
         });
     }

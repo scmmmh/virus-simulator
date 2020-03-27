@@ -135,8 +135,8 @@ export default class Home extends Vue {
 
         for (let idx = 0; idx < data.length; idx++) {
             if (data[idx].counts.length > 0) {
-                data[idx].count = Math.round(mean(data[idx].counts)) + ' (+/- ' + Math.round(std(data[idx].counts)) + ')';
-                data[idx].percentage = mean(data[idx].percentages).toFixed(2) + '% (+/- ' + std(data[idx].percentages).toFixed(2) + '%)';
+                data[idx].count = Math.round(mean(data[idx].counts)) + ' (± ' + Math.round(std(data[idx].counts)) + ')';
+                data[idx].percentage = mean(data[idx].percentages).toFixed(2) + '% (± ' + std(data[idx].percentages).toFixed(2) + '%)';
             }
         }
         return data;
