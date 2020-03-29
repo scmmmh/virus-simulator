@@ -12,8 +12,34 @@ export default new Vuex.Store({
       stepLabel: '',
       populations: [] as Person[][],
       virusStats: [] as VirusDayStats[],
+      settings: {
+          population: {
+              size: 10000,
+              initialInfected: 1,
+          },
+          simulation: {
+              length: 60,
+              iterations: 10,
+          },
+      },
   },
   mutations: {
+      setPopulationSize(state, payload: number) {
+          state.settings.population.size = payload;
+      },
+
+      setInitialInfected(state, payload: number) {
+          state.settings.population.initialInfected = payload;
+      },
+
+      setSimulationLength(state, payload: number) {
+          state.settings.simulation.length = payload;
+      },
+
+      setSimulationIterations(state, payload: number) {
+          state.settings.simulation.iterations = payload;
+      },
+
       clearPopulations(state) {
           state.populations = [];
       },
@@ -30,7 +56,7 @@ export default new Vuex.Store({
 
       clearVirusStats(state) {
           const virusStats = [];
-          for (let idx = 0; idx < 90; idx++) {
+          for (let idx = 0; idx < state.settings.simulation.length; idx++) {
               virusStats.push({
                   day: idx,
                   stats: [],

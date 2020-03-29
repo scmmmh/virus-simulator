@@ -38,3 +38,18 @@ export interface VirusStats {
     infected: number;
     newInfected: number;
 }
+
+export interface Settings {
+    population: PopulationSettings;
+    simulation: SimulationSettings;
+}
+
+export interface PopulationSettings {
+    size: number;
+    initialInfected: number;
+}
+
+export interface SimulationSettings {
+    length: number;
+    iterations: number;
+}

@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-card-title>Virus Spread</v-card-title>
-        <v-data-table :headers="headers" :items="items" items-per-page="10"/>
+        <v-data-table :headers="headers" :items="items" :items-per-page="10"/>
     </v-card>
 </template>
 

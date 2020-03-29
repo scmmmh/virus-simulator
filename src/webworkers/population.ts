@@ -1,17 +1,17 @@
-import { Person } from '@/interfaces';
+import { Person, PopulationSettings } from '@/interfaces';
 
-export function generatePopulation(populationSize: number) {
-    const people = [] as Person[];
-    for (let idx = 0; idx < populationSize; idx++) {
-        people.push({
+export function generatePopulation(settings: PopulationSettings) {
+    const population = [] as Person[];
+    for (let idx = 0; idx < settings.size; idx++) {
+        population.push({
             age: Math.round(Math.random() * 90),
             infected: null,
             relationships: [],
         });
     }
-    people.forEach((person, idx) => {
+    population.forEach((person, idx) => {
         while (person.relationships.length < 10) {
-            const targetIdx = Math.floor(Math.random() * populationSize);
+            const targetIdx = Math.floor(Math.random() * settings.size);
             let found = idx === targetIdx ;
             person.relationships.forEach((target) => {
                 if (target.idx === targetIdx) {
@@ -22,11 +22,14 @@ export function generatePopulation(populationSize: number) {
                 person.relationships.push({
                     idx: targetIdx,
                 });
-                people[idx].relationships.push({
+                population[idx].relationships.push({
                     idx: idx,
                 });
             }
         }
     });
-    return people;
+    for (let idx2 = 0; idx2 < settings.initialInfected; idx2++) {
+        population[Math.floor(Math.random() * population.length)].infected = 0;
+    }
+    return population;
 }

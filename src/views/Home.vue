@@ -62,7 +62,7 @@ export default class Home extends Vue {
     }
 
     public get progress() {
-        return 100 / 990 * this.$store.state.step;
+        return 100 / ((this.$store.state.settings.simulation.length + 1) * this.$store.state.settings.simulation.iterations) * this.$store.state.step;
     }
 
     public async runSimulation() {
@@ -73,21 +73,18 @@ export default class Home extends Vue {
         });
         this.$store.commit('clearPopulations');
         this.$store.commit('clearVirusStats');
-        for (let idx1 = 0; idx1 < 10; idx1++) {
+        for (let idx1 = 0; idx1 < this.$store.state.settings.simulation.iterations; idx1++) {
             this.$store.commit('setRunning', {
                 running: true,
-                step: idx1 * 91,
+                step: idx1 * (this.$store.state.settings.simulation.length + 1),
                 stepLabel: 'Generating population #' + (idx1 + 1),
             });
-            let population = await this.populationWorker.generatePopulation(10000);
-            for (let idx2 = 0; idx2 < 3; idx2++) {
-                population[Math.floor(Math.random() * population.length)].infected = 0;
-            }
+            let population = await this.populationWorker.generatePopulation(this.$store.state.settings.population);
             this.$store.commit('addPopulation', population);
-            for (let idx2 = 0; idx2 < 90; idx2++) {
+            for (let idx2 = 0; idx2 < this.$store.state.settings.simulation.length; idx2++) {
                 this.$store.commit('setRunning', {
                     running: true,
-                    step: idx1 * 91 + idx2 + 1,
+                    step: idx1 * (this.$store.state.settings.simulation.length + 1) + idx2 + 1,
                     stepLabel: 'Running simulation #' + (idx1 + 1) + ', day ' + (idx2 + 1),
                 });
                 population = await this.spreadWorker.step(population, idx2);
