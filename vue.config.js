@@ -10,6 +10,7 @@ module.exports = {
             title: 'Virus Simulator',
         },
     },
+    publicPath: '/virus-simulator/',
     transpileDependencies: [
         'vuetify'
     ],
