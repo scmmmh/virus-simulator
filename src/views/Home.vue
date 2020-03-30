@@ -79,7 +79,7 @@ export default class Home extends Vue {
                 step: idx1 * (this.$store.state.settings.simulation.length + 1),
                 stepLabel: 'Generating population #' + (idx1 + 1),
             });
-            let population = await this.populationWorker.generatePopulation(this.$store.state.settings.population);
+            let population = await this.populationWorker.generatePopulation(this.$store.state.settings.population, this.$store.state.settings.virus);
             this.$store.commit('addPopulation', population);
             for (let idx2 = 0; idx2 < this.$store.state.settings.simulation.length; idx2++) {
                 this.$store.commit('setRunning', {
@@ -87,16 +87,20 @@ export default class Home extends Vue {
                     step: idx1 * (this.$store.state.settings.simulation.length + 1) + idx2 + 1,
                     stepLabel: 'Running simulation #' + (idx1 + 1) + ', day ' + (idx2 + 1),
                 });
-                population = await this.spreadWorker.step(population, idx2);
+                population = await this.spreadWorker.step(population, idx2, this.$store.state.settings.virus);
                 const stats = {
                     infected: 0,
                     newInfected: 0,
+                    infectuous: 0,
                 } as VirusStats;
                 population.forEach((person: Person) => {
                     if (person.infected !== null) {
                         stats.infected++;
                         if (person.infected === idx2) {
                             stats.newInfected++;
+                        }
+                        if (person.incubation !== null && person.infectuous !== null && person.incubation < idx2 && idx2 <= person.infectuous) {
+                            stats.infectuous++;
                         }
                     }
                 });

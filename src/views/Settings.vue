@@ -1,11 +1,36 @@
 <template>
     <v-container>
         <v-tabs v-model="tab">
-            <v-tab :key="1">Simulation Settings</v-tab>
-            <v-tab :key="2">Population Settings</v-tab>
+            <v-tab :key="1">Virus Settings</v-tab>
+            <v-tab :key="2">Simulation Settings</v-tab>
+            <v-tab :key="3">Population Settings</v-tab>
         </v-tabs>
         <v-tabs-items v-model="tab">
             <v-tab-item :key="1">
+                <v-card>
+                    <form class="px-4">
+                        <v-container>
+                            <v-row cols="12">
+                                <v-col cols="2">
+                                    <v-text-field label="Average Incubation Period (Days)" type="number" v-model="virusIncubationMean"/>
+                                </v-col>
+                                <v-col cols="2">
+                                    <v-text-field label="± Incubation Period (Days)" type="number" v-model="virusIncubationStd"/>
+                                </v-col>
+                            </v-row>
+                            <v-row cols="12">
+                                <v-col cols="2">
+                                    <v-text-field label="Average Infectuous Period (Days)" type="number" v-model="virusInfectuousMean"/>
+                                </v-col>
+                                <v-col cols="2">
+                                    <v-text-field label="± Infectuous Period (Days)" type="number" v-model="virusInfectuousStd"/>
+                                </v-col>
+                            </v-row>
+                        </v-container>
+                    </form>
+                </v-card>
+            </v-tab-item>
+            <v-tab-item :key="2">
                 <v-card>
                     <form class="px-4">
                         <v-container>
@@ -21,7 +46,7 @@
                     </form>
                 </v-card>
             </v-tab-item>
-            <v-tab-item :key="2">
+            <v-tab-item :key="3">
                 <v-card>
                     <form class="px-4">
                         <v-container>
@@ -50,6 +75,38 @@ import { Component, Vue } from 'vue-property-decorator';
 })
 export default class Home extends Vue {
     public tab = 0;
+
+    get virusIncubationMean() {
+        return this.$store.state.settings.virus.incubation.mean;
+    }
+
+    set virusIncubationMean(value: string) {
+        this.$store.commit('setVirusIncubationMean', Number.parseInt(value));
+    }
+
+    get virusIncubationStd() {
+        return this.$store.state.settings.virus.incubation.std;
+    }
+
+    set virusIncubationStd(value: string) {
+        this.$store.commit('setVirusIncubationStd', Number.parseInt(value));
+    }
+
+    get virusInfectuousMean() {
+        return this.$store.state.settings.virus.infectuous.mean;
+    }
+
+    set virusInfectuousMean(value: string) {
+        this.$store.commit('setVirusInfectuousMean', Number.parseInt(value));
+    }
+
+    get virusInfectuousStd() {
+        return this.$store.state.settings.virus.infectuous.std;
+    }
+
+    set virusInfectuousStd(value: string) {
+        this.$store.commit('setVirusInfectuousStd', Number.parseInt(value));
+    }
 
     get simulationLength() {
         return this.$store.state.settings.simulation.length;

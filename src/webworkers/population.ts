@@ -1,17 +1,21 @@
-import { Person, PopulationSettings } from '@/interfaces';
+import gaussian from 'gaussian';
 
-export function generatePopulation(settings: PopulationSettings) {
+import { Person, PopulationSettings, VirusSettings } from '@/interfaces';
+
+export function generatePopulation(populationSettings: PopulationSettings, virusSettings: VirusSettings) {
     const population = [] as Person[];
-    for (let idx = 0; idx < settings.size; idx++) {
+    for (let idx = 0; idx < populationSettings.size; idx++) {
         population.push({
             age: Math.round(Math.random() * 90),
             infected: null,
+            incubation: null,
+            infectuous: null,
             relationships: [],
         });
     }
     population.forEach((person, idx) => {
         while (person.relationships.length < 10) {
-            const targetIdx = Math.floor(Math.random() * settings.size);
+            const targetIdx = Math.floor(Math.random() * populationSettings.size);
             let found = idx === targetIdx ;
             person.relationships.forEach((target) => {
                 if (target.idx === targetIdx) {
@@ -28,8 +32,15 @@ export function generatePopulation(settings: PopulationSettings) {
             }
         }
     });
-    for (let idx2 = 0; idx2 < settings.initialInfected; idx2++) {
-        population[Math.floor(Math.random() * population.length)].infected = 0;
+    const incubationDist = gaussian(virusSettings.incubation.mean, Math.pow(virusSettings.incubation.std, 2));
+    const infectuousDist = gaussian(virusSettings.infectuous.mean, Math.pow(virusSettings.infectuous.std, 2));
+    for (let idx2 = 0; idx2 < populationSettings.initialInfected; idx2++) {
+        const personIdx = Math.floor(Math.random() * population.length);
+        const incubation = Math.round(incubationDist.ppf(Math.random()));
+        const infectuous = incubation + Math.round(infectuousDist.ppf(Math.random()));
+        population[personIdx].infected = 0;
+        population[personIdx].incubation = incubation;
+        population[personIdx].infectuous = infectuous;
     }
     return population;
 }

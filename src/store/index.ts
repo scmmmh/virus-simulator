@@ -13,23 +13,41 @@ export default new Vuex.Store({
       populations: [] as Person[][],
       virusStats: [] as VirusDayStats[],
       settings: {
-          population: {
-              size: 10000,
-              initialInfected: 1,
-          },
           simulation: {
               length: 60,
               iterations: 10,
           },
+          population: {
+              size: 10000,
+              initialInfected: 1,
+          },
+          virus: {
+              incubation: {
+                  mean: 5,
+                  std: 1,
+              },
+              infectuous: {
+                  mean: 3,
+                  std: 1,
+              }
+          }
       },
   },
   mutations: {
-      setPopulationSize(state, payload: number) {
-          state.settings.population.size = payload;
+      setVirusIncubationMean(state, payload: number) {
+          state.settings.virus.incubation.mean = payload;
       },
 
-      setInitialInfected(state, payload: number) {
-          state.settings.population.initialInfected = payload;
+      setVirusIncubationStd(state, payload: number) {
+          state.settings.virus.incubation.std = payload;
+      },
+
+      setVirusInfectuousMean(state, payload: number) {
+          state.settings.virus.infectuous.mean = payload;
+      },
+
+      setVirusInfectuousStd(state, payload: number) {
+          state.settings.virus.infectuous.std = payload;
       },
 
       setSimulationLength(state, payload: number) {
@@ -38,6 +56,14 @@ export default new Vuex.Store({
 
       setSimulationIterations(state, payload: number) {
           state.settings.simulation.iterations = payload;
+      },
+
+      setPopulationSize(state, payload: number) {
+          state.settings.population.size = payload;
+      },
+
+      setInitialInfected(state, payload: number) {
+          state.settings.population.initialInfected = payload;
       },
 
       clearPopulations(state) {

@@ -30,6 +30,10 @@ export default class Home extends Vue {
             text: 'Total Infected',
             value: 'infected',
         },
+        {
+            text: 'Total Infectuous',
+            value: 'infectuous',
+        }
     ];
 
     public get items() {
@@ -38,6 +42,7 @@ export default class Home extends Vue {
                 day: virusDay.day,
                 newInfected: virusDay.stats.length > 0 ? Math.round(mean(virusDay.stats.map((stat: VirusStats) => { return stat.newInfected; }))) + ' (± ' + Math.round(std(virusDay.stats.map((stat: VirusStats) => { return stat.newInfected; }))) + ')' : '-',
                 infected: virusDay.stats.length > 0 ? Math.round(mean(virusDay.stats.map((stat: VirusStats) => { return stat.infected; }))) + ' (± ' + Math.round(std(virusDay.stats.map((stat: VirusStats) => { return stat.infected; }))) + ')' : '-',
+                infectuous: virusDay.stats.length > 0 ? Math.round(mean(virusDay.stats.map((stat: VirusStats) => { return stat.infectuous; }))) + ' (± ' + Math.round(std(virusDay.stats.map((stat: VirusStats) => { return stat.infectuous; }))) + ')' : '-',
             }
         });
     }
