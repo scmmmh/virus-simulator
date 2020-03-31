@@ -6,7 +6,7 @@
                 <v-icon>mdi-run</v-icon>
             </v-btn>
             <template v-else>
-                <v-btn text>
+                <v-btn text :disabled="true">
                     <span>Simulation Running</span>
                     <v-icon>mdi-run-fast</v-icon>
                 </v-btn>
