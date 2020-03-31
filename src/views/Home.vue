@@ -18,7 +18,10 @@
         <v-container>
             <v-row>
                 <v-col>
-                    <virus-line/>
+                    <v-card>
+                        <v-card-title>Virus Spread</v-card-title>
+                        <virus-line stat="infected" title="Total Infected"/>
+                    </v-card>
                 </v-col>
                 <v-col>
                     <virus-stats-component/>

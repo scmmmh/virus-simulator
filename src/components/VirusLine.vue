@@ -26,6 +26,7 @@ export default {
             }
         }
     },
+    props: ['stat', 'title'],
     computed: {
         virusStats() {
             return this.$store.state.virusStats;
@@ -36,53 +37,41 @@ export default {
     },
     watch: {
         virusStats(newVirusStats) {
-            const newInfectedData = newVirusStats.map((virusDay) => {
-                return virusDay.stats.length > 0 ? Math.round(mean(virusDay.stats.map((stat: VirusStats) => { return stat.newInfected; }))) : 0;
-            });
-            const totalInfectedData = newVirusStats.map((virusDay) => {
-                return virusDay.stats.length > 0 ? Math.round(mean(virusDay.stats.map((stat: VirusStats) => { return stat.infected; }))) : 0;
-            });
-            const minTotalInfectedData = newVirusStats.map((virusDay) => {
-                return virusDay.stats.length > 0 ? Math.round(min(virusDay.stats.map((stat: VirusStats) => { return stat.infected; }))) : 0;
-            });
-            const maxTotalInfectedData = newVirusStats.map((virusDay) => {
-                return virusDay.stats.length > 0 ? Math.round(max(virusDay.stats.map((stat: VirusStats) => { return stat.infected; }))) : 0;
-            });
-            const infectuousData = newVirusStats.map((virusDay) => {
-                return virusDay.stats.length > 0 ? Math.round(mean(virusDay.stats.map((stat: VirusStats) => { return stat.infectuous; }))) : 0;
+            const minimum = [] as number[];
+            const average = [] as number[];
+            const maximum = [] as number[];
+            newVirusStats.map((virusDay) => {
+                if (virusDay.stats.length > 0) {
+                    const data = virusDay.stats.map((stat: VirusStats) => { return stat[this.$props.stat]; });
+                    minimum.push(min(data));
+                    average.push(mean(data));
+                    maximum.push(max(data));
+                } else {
+                    minimum.push(0);
+                    average.push(0);
+                    maximum.push(0);
+                }
             });
             this.chartData = {
                 labels: this.labels,
                 datasets: [
                     {
-                        label: 'Newly Infected',
-                        borderColor: '#aaaa00',
-                        backgroundColor: '#00000000',
-                        data: newInfectedData,
-                    },
-                    {
-                        label: 'Total Infected (Minimum)',
+                        label: 'Minimum',
                         borderColor: '#ff000066',
                         backgroundColor: '#00000000',
-                        data: minTotalInfectedData,
+                        data: minimum,
                     },
                     {
-                        label: 'Total Infected (Average)',
+                        label: 'Average',
                         borderColor: '#ff0000',
                         backgroundColor: '#00000000',
-                        data: totalInfectedData,
+                        data: average,
                     },
                     {
-                        label: 'Total Infected (Maximum)',
+                        label: 'Maximum',
                         borderColor: '#ff000066',
                         backgroundColor: '#00000000',
-                        data: maxTotalInfectedData,
-                    },
-                    {
-                        label: 'Currently Infectuous',
-                        borderColor: '#660000',
-                        backgroundColor: '#00000000',
-                        data: infectuousData,
+                        data: maximum,
                     },
                 ]
             }
