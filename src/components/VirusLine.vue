@@ -1,4 +1,5 @@
 <script lang="ts">
+// @ts-nocheck
 import { Line, mixins } from 'vue-chartjs';
 import { mean, max, min } from 'mathjs';
 
