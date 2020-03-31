@@ -6,7 +6,7 @@
                     <v-icon>mdi-chart-bell-curve</v-icon>
                     <span class="ml-2">Virus Simulator</span>
                 </v-btn>
-                <v-btn to="/settings" text disabled="!this.$store.state.running">
+                <v-btn to="/settings" text :disabled="this.$store.state.running">
                     <v-icon>mdi-cogs</v-icon>
                     <span class="ml-2">Settings</span>
                 </v-btn>

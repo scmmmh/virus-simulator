@@ -18,6 +18,9 @@
         <v-container>
             <v-row>
                 <v-col>
+                    <virus-line/>
+                </v-col>
+                <v-col>
                     <virus-stats-component/>
                 </v-col>
                 <v-col>
@@ -39,12 +42,15 @@ import populationWorkerLoader from 'workerize-loader!@/webworkers/population';
 import spreadWorkerLoader from 'workerize-loader!@/webworkers/spread';
 import PopulationStats from '@/components/PopulationStats.vue';
 import VirusStatsComponent from '@/components/VirusStats.vue';
+import VirusLine from '@/components/VirusLine.vue';
+
 import { PopulationWorker, SpreadWorker, Person, VirusStats } from '@/interfaces';
 
 @Component({
     components: {
         PopulationStats,
         VirusStatsComponent,
+        VirusLine,
     },
 })
 export default class Home extends Vue {
