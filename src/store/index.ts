@@ -20,8 +20,8 @@ export default new Vuex.Store({
       virusStats: [] as VirusDayStats[],
       settings: {
           simulation: {
-              length: 90,
-              iterations: 8,
+              length: 120,
+              iterations: 5,
           },
           population: {
               size: 10000,
