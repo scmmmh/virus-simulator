@@ -7,7 +7,7 @@ import populationWorkerLoader from 'workerize-loader!@/webworkers/population';
 // eslint-disable-next-line
 // @ts-ignore
 import spreadWorkerLoader from 'workerize-loader!@/webworkers/spread';
-import { Person, VirusDayStats, SetRunningCommit, AddVirusStatsCommit, PopulationWorker, SpreadWorker } from '@/interfaces';
+import { Person, VirusDayStats, VirusStats, SetRunningCommit, AddVirusStatsCommit, PopulationWorker, SpreadWorker } from '@/interfaces';
 
 Vue.use(Vuex)
 
