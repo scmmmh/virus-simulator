@@ -2,6 +2,8 @@
     <v-card>
         <v-card-title>Population Overview</v-card-title>
         <v-data-table :headers="headers" :items="items" hide-default-footer/>
+        <v-card-text>This table shows you an overview over the {{ simulationSettings.iterations }} populations that were
+            used as the basis for the virus simulation.</v-card-text>
     </v-card>
 </template>
 
@@ -31,6 +33,10 @@ export default class Home extends Vue {
             value: 'percentage',
         }
     ];
+
+    public get simulationSettings() {
+        return this.$store.state.settings.simulation;
+    }
 
     public get items() {
         const data = [

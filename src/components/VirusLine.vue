@@ -16,6 +16,7 @@ export default {
         return {
             labels: labels,
             options: {
+                animation: false,
                 tooltips: {
 					mode: 'index',
 					intersect: false,

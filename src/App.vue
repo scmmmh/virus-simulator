@@ -10,6 +10,10 @@
                     <v-icon>mdi-cogs</v-icon>
                     <span class="ml-2">Settings</span>
                 </v-btn>
+                <v-btn to="/help" text>
+                    <v-icon>mdi-help</v-icon>
+                    <span class="ml-2">Help</span>
+                </v-btn>
             </div>
             <v-spacer></v-spacer>
             <v-btn href="https://github.com/scmmmh/viral-simulator" target="_blank" text>

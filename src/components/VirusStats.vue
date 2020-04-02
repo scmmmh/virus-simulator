@@ -2,6 +2,8 @@
     <v-card>
         <v-card-title>Virus Spread</v-card-title>
         <v-data-table :headers="headers" :items="items" :items-per-page="10"/>
+        <v-card-text>This table show you the details on the virus' spread throughout the {{ simulationSettings.length }}
+            days of the simulation.</v-card-text>
     </v-card>
 </template>
 
@@ -35,6 +37,10 @@ export default class Home extends Vue {
             value: 'infectuous',
         }
     ];
+
+    public get simulationSettings() {
+        return this.$store.state.settings.simulation;
+    }
 
     public get items() {
         return this.$store.state.virusStats.map((virusDay: VirusDayStats) => {

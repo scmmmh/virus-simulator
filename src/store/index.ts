@@ -13,6 +13,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+      initial: true,
       running: false,
       step: 0,
       stepLabel: '',
@@ -85,6 +86,7 @@ export default new Vuex.Store({
       },
 
       setRunning(state, payload: SetRunningCommit) {
+          state.initial = false;
           state.running = payload.running;
           state.step = payload.step;
           state.stepLabel = payload.stepLabel;
@@ -161,6 +163,11 @@ export default new Vuex.Store({
                       stats: stats,
                   });
               }
+              commit('setRunning', {
+                  running: false,
+                  step: 0,
+                  stepLabel: 'Completed',
+              });
           }
       },
   },

@@ -15,18 +15,26 @@
                 <v-progress-circular :value="progress" size="24" width="2"/>
             </template>
         </v-toolbar>
-        <v-container fluid>
+        <v-container v-if="isInitial">
+            <overview-text/>
+        </v-container>
+        <v-container fluid v-else>
             <v-row>
-                <v-col>
+                <v-col cols="4">
                     <v-card>
                         <v-card-title>Virus Spread</v-card-title>
                         <virus-line stat="infected" title="Total Infected"/>
+                        <v-card-text>This graph shows the average number of infected individuals on each of the
+                            {{ $store.state.settings.simulation.length }} days of the simulation over the
+                            {{ $store.state.settings.simulation.iterations }} iterations. It also shows you the
+                            largest and smallest number of infected individuals to give you an idea of the kind of
+                            spread the random choices create.</v-card-text>
                     </v-card>
                 </v-col>
-                <v-col>
+                <v-col cols="4">
                     <virus-stats-component/>
                 </v-col>
-                <v-col>
+                <v-col cols="4">
                     <population-stats/>
                 </v-col>
             </v-row>
@@ -40,15 +48,21 @@ import { Component, Vue } from 'vue-property-decorator';
 import PopulationStats from '@/components/PopulationStats.vue';
 import VirusStatsComponent from '@/components/VirusStats.vue';
 import VirusLine from '@/components/VirusLine.vue';
+import OverviewText from '@/components/OverviewText';
 
 @Component({
     components: {
         PopulationStats,
         VirusStatsComponent,
         VirusLine,
+        OverviewText,
     },
 })
 export default class Home extends Vue {
+    public get isInitial() {
+        return this.$store.state.initial;
+    }
+
     public get isRunning() {
         return this.$store.state.running;
     }
