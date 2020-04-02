@@ -9,7 +9,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
-import OverviewText from '@/components/OverviewText';
+import OverviewText from '@/components/OverviewText.vue';
 
 @Component({
     components: {

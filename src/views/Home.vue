@@ -48,7 +48,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import PopulationStats from '@/components/PopulationStats.vue';
 import VirusStatsComponent from '@/components/VirusStats.vue';
 import VirusLine from '@/components/VirusLine.vue';
-import OverviewText from '@/components/OverviewText';
+import OverviewText from '@/components/OverviewText.vue';
 
 @Component({
     components: {
